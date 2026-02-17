@@ -1,15 +1,13 @@
 from network.registry import get_available_nodes
-from control_plane.reliability import get_score
+from control_plane.hardware import compatible
 
 def select_node(job):
     nodes = get_available_nodes()
     if not nodes:
         return None
 
-    ranked = sorted(
-        nodes.items(),
-        key=lambda x: get_score(x[0]),
-        reverse=True
-    )
+    for node_id, data in nodes.items():
+        if compatible(job["gpu_required"], data["gpu"]):
+            return node_id
 
-    return ranked[0][0]
+    return None
