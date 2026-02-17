@@ -48,3 +48,9 @@ from control_plane.metrics import system_metrics
 @app.get("/metrics")
 def metrics():
     return system_metrics
+
+from control_plane.routing_engine import get_last_decision
+
+@app.get("/decision")
+def decision():
+    return get_last_decision()
