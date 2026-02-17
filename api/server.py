@@ -42,3 +42,9 @@ def submit(job: Job):
 def run_dispatch():
     dispatch()
     return {"status": "dispatched"}
+
+from control_plane.metrics import system_metrics
+
+@app.get("/metrics")
+def metrics():
+    return system_metrics
